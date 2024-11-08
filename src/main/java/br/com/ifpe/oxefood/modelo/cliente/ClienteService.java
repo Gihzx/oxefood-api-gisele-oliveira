@@ -5,10 +5,12 @@ import jakarta.transaction.Transactional;
 
 
 @Service
+
 public class ClienteService {
+  // istacia um o
      @Autowired
    private ClienteRepository repository;
-
+    // Abrir um ploco de trnasação
    @Transactional
    public Cliente save(Cliente cliente) {
 

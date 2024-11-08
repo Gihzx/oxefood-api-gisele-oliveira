@@ -1,7 +1,6 @@
 package br.com.ifpe.oxefood.util.entity;
 
 import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +18,6 @@ import lombok.Setter;
 public abstract class EntidadeNegocio implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-
     private Long id;
    @JsonIgnore
    @Column
