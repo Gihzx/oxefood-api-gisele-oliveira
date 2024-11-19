@@ -19,6 +19,7 @@ public class EntregadorRequest {
     // formata fomato de data 
 
    private String cpf;
+   
    @JsonFormat(pattern = "dd/MM/yyyy")
    private LocalDate dataNascimento;
 
