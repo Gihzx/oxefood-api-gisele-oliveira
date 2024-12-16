@@ -1,16 +1,16 @@
 package br.com.ifpe.oxefood.modelo.cliente;
 
-import java.time.LocalDate;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import org.hibernate.annotations.SQLRestriction;
 import br.com.ifpe.oxefood.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
+import java.util.List;
+import org.hibernate.annotations.SQLRestriction;
 // lombok 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +21,7 @@ import lombok.Setter;
 // torna a classe manipulavel pelo jpa
 @Entity
 // iNdica que a classe vira uma tabela no banco / como padrão cria como o nome da classe
-@Table(name = "Cliente")
+@Table(name = "EnderecoCliente")
 // acrecenta a uma clausa ware na tabela cliente, para filtrar em  esta habilitado 
 @SQLRestriction("habilitado = true")
 // ----------------------------------------LOMBOK-------------------------------------------
@@ -33,24 +33,33 @@ import lombok.Setter;
 @AllArgsConstructor
 // contrutor fazio
 @NoArgsConstructor
-public class Cliente extends EntidadeAuditavel  {
-             @OneToMany(mappedBy = "cliente", orphanRemoval = true, fetch = FetchType.EAGER)
-   private List<EnderecoCliente> enderecos;
-//   @column faz que que seja criada colunas nas tabelas/ c
-    @Column(nullable = false, length = 100)
-    private String nome;
- 
-    @Column
-    private LocalDate dataNascimento;
- 
-    @Column (unique = true)
-    private String cpf;
- 
-    @Column
-    private String foneCelular;
- 
-    @Column
-    private String foneFixo;
- 
+
+    public class EnderecoCliente extends EntidadeAuditavel {
+  
+
+
+   @JsonIgnore
+   @ManyToOne
+   private Cliente cliente;
+
+   @Column
+   private String rua;
+
+   @Column
+   private String numero;
+
+   @Column
+   private String bairro;
+   @Column
+   private String cep;
+
+   @Column
+   private String cidade;
+
+   @Column
+   private String estado;
+
+   @Column
+   private String complemento;
 
 }

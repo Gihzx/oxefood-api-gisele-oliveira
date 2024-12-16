@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.ifpe.oxefood.modelo.cliente.Cliente;
+import br.com.ifpe.oxefood.util.exeption.ProdutoException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -14,6 +14,11 @@ public class ProdutoService  {
     // Abrir um ploco de trnasação
          @Transactional
    public Produto save(Produto produto) {
+
+    if (produto.getValorUnitario() < 10) {
+	    throw new ProdutoException(ProdutoException.MSG_VALOR_MINIMO_PRODUTO);
+	}
+
     produto.setHabilitado(Boolean.TRUE);
        return repository.save(produto);
    }
@@ -30,6 +35,7 @@ public Produto obterPorID(Long id) {
 public void update(Long id, Produto produtoAlterado) {
 
    Produto produto = repository.findById(id).get();
+   produto.setCategoria(produtoAlterado.getCategoria());
    produto.setCodigo(produtoAlterado.getCodigo());
    produto.setTitulo(produtoAlterado.getTitulo());
    produto.setDescricao(produtoAlterado.getDescricao());
@@ -38,14 +44,14 @@ public void update(Long id, Produto produtoAlterado) {
    produto.setTempoEntregaMaximo(produtoAlterado.getTempoEntregaMaximo());
    repository.save(produto);
 }
-
-   @Transactional
+ @Transactional
    public void delete(Long id) {
 
-       Produto produto= repository.findById(id).get();
+       Produto produto = repository.findById(id).get();
        produto.setHabilitado(Boolean.FALSE);
 
        repository.save(produto);
    }
+
 
 }
