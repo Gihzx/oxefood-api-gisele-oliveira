@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.modelo.acesso.Perfil;
+import br.com.ifpe.oxefood.modelo.acesso.PerfilRepository;
+import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import jakarta.transaction.Transactional;
 
 
@@ -12,6 +15,11 @@ import jakarta.transaction.Transactional;
 
 public class ClienteService {
 
+  @Autowired
+   private UsuarioService usuarioService;
+
+   @Autowired
+   private PerfilRepository perfilUsuarioRepository;
 
     
   // istacia um o
@@ -23,6 +31,14 @@ public class ClienteService {
     // Abrir um ploco de trnasação
    @Transactional
    public Cliente save(Cliente cliente) {
+
+       usuarioService.save(cliente.getUsuario());
+
+      for (Perfil perfil : cliente.getUsuario().getRoles()) {
+           perfil.setHabilitado(Boolean.TRUE);
+           perfilUsuarioRepository.save(perfil);
+      }
+
 
        cliente.setHabilitado(Boolean.TRUE);
        return repository.save(cliente);
