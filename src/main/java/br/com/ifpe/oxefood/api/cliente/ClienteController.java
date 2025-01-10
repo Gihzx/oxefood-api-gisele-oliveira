@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ifpe.oxefood.modelo.cliente.Cliente;
 import br.com.ifpe.oxefood.modelo.cliente.ClienteService;
 import br.com.ifpe.oxefood.modelo.cliente.EnderecoCliente;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
@@ -28,9 +29,9 @@ public class ClienteController {
    private ClienteService clienteService;
 
    @PostMapping
-   public ResponseEntity<Cliente> save(@RequestBody @Valid  ClienteRequest request) {
+   public ResponseEntity<Cliente> save(@RequestBody @Valid  ClienteRequest clienteRequest , HttpServletRequest request) {
 
-       Cliente cliente = clienteService.save(request.build());
+       Cliente cliente = clienteService.save(clienteRequest.build(), usuarioService.obterUsuarioLogado(request));
        return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
    }
     @GetMapping
@@ -44,9 +45,9 @@ public class ClienteController {
         return clienteService.obterPorID(id);
     }
      @PutMapping("/{id}")
-    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody @Valid  ClienteRequest request) {
+    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody @Valid  ClienteRequest HttpServletRequest request) {
 
-       clienteService.update(id, request.build());
+       clienteService.update(id, request.build(), usuarioService.obterUsuarioLogado(request));
        return ResponseEntity.ok().build();
  }
      @DeleteMapping("/{id}")

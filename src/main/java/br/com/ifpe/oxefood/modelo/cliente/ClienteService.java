@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.ifpe.oxefood.modelo.acesso.Perfil;
 import br.com.ifpe.oxefood.modelo.acesso.PerfilRepository;
+import br.com.ifpe.oxefood.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import jakarta.transaction.Transactional;
 
@@ -30,7 +31,7 @@ public class ClienteService {
   private EnderecoClienteRepository enderecoClienteRepository;
     // Abrir um ploco de trnasação
    @Transactional
-   public Cliente save(Cliente cliente) {
+   public Cliente save(Cliente cliente, Usuario usuarioLogado) {
 
        usuarioService.save(cliente.getUsuario());
 
@@ -41,6 +42,7 @@ public class ClienteService {
 
 
        cliente.setHabilitado(Boolean.TRUE);
+       cliente.setCriadoPor(usuarioLogado);
        return repository.save(cliente);
    }
    public List<Cliente> listarTodos() {
@@ -53,7 +55,7 @@ public Cliente obterPorID(Long id) {
     return repository.findById(id).get();  //select * from cliente where id = ? 
 }
 @Transactional
-public void update(Long id, Cliente clienteAlterado) {
+public void update(Long id, Cliente clienteAlterado,Usuario usuarioLogado) {
 
    Cliente cliente = repository.findById(id).get();
    cliente.setNome(clienteAlterado.getNome());
@@ -61,6 +63,8 @@ public void update(Long id, Cliente clienteAlterado) {
    cliente.setCpf(clienteAlterado.getCpf());
    cliente.setFoneCelular(clienteAlterado.getFoneCelular());
    cliente.setFoneFixo(clienteAlterado.getFoneFixo());
+   cliente.setUltimaModificacaoPor(usuarioLogado);
+
      
    repository.save(cliente);
 }
