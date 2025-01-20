@@ -1,6 +1,5 @@
 package br.com.ifpe.oxefood.modelo.categoria;
 import org.hibernate.annotations.SQLRestriction;
-
 import br.com.ifpe.oxefood.util.entity.EntidadeAuditavel;
 import lombok.Setter;
 import jakarta.persistence.Column;

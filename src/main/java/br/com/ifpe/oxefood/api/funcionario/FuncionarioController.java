@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.oxefood.modelo.acesso.Perfil;
+import br.com.ifpe.oxefood.modelo.funcionario.Funcionario;
+import br.com.ifpe.oxefood.modelo.funcionario.FuncionarioService;
+import br.com.ifpe.oxefood.modelo.funcionario.TipoFuncionario;
 import jakarta.validation.Valid;
 
 @RestController

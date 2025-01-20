@@ -1,6 +1,5 @@
 package br.com.ifpe.oxefood.api.produto;
 
-import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.oxefood.modelo.categoria.CategoriaService;
@@ -66,5 +66,14 @@ public class ProdutoController {
        produtoService.delete(id);
        return ResponseEntity.ok().build();
    }
+    @PostMapping("/filtrar")
+    public List<Produto> filtrar(
+           @RequestParam(value = "codigo", required = false) String codigo,
+           @RequestParam(value = "titulo", required = false) String titulo,
+           @RequestParam(value = "idCategoria", required = false) Long idCategoria) {
+
+       return produtoService.filtrar(codigo, titulo, idCategoria);
+   }
+
 
 }
