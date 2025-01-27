@@ -19,15 +19,26 @@ import br.com.ifpe.oxefood.modelo.acesso.Perfil;
 import br.com.ifpe.oxefood.modelo.funcionario.Funcionario;
 import br.com.ifpe.oxefood.modelo.funcionario.FuncionarioService;
 import br.com.ifpe.oxefood.modelo.funcionario.TipoFuncionario;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/funcionario")
 @CrossOrigin
+@Tag(
+    name = "API Cliente",
+    description = "API responsável pelos servidos de cliente no sistema"
+)
+
 public class FuncionarioController {
 
     @Autowired
     private FuncionarioService funcionarioService;
+    @Operation(
+       summary = "Serviço responsável por salvar um cliente no sistema.",
+       description = "Exemplo de descrição de um endpoint responsável por inserir um cliente no sistema."
+   )
 
     @PostMapping
     public ResponseEntity<Funcionario> save(@RequestBody @Valid FuncionarioRequest request) {

@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import br.com.ifpe.oxefood.modelo.cliente.Cliente;
 import br.com.ifpe.oxefood.modelo.cliente.ClienteService;
 import br.com.ifpe.oxefood.modelo.cliente.EnderecoCliente;
@@ -24,9 +25,18 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/cliente")
 @CrossOrigin
 // define as rotar do cliente
+@Tag(
+    name = "API Cliente",
+    description = "API responsável pelos servidos de cliente no sistema"
+)
+
 public class ClienteController {
     @Autowired
    private ClienteService clienteService;
+   @Operation(
+    summary = "Serviço responsável por salvar um cliente no sistema.",
+    description = "Exemplo de descrição de um endpoint responsável por inserir um cliente no sistema."
+)
 
    @PostMapping
    public ResponseEntity<Cliente> save(@RequestBody @Valid  ClienteRequest clienteRequest , HttpServletRequest request) {
